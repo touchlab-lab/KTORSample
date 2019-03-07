@@ -19,6 +19,13 @@ class ViewController: UIViewController {
         
         DogAPI().getRandomDog {result in
             self.resultText.text = result
+            let url = URL(string: result)
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    self.image.image = UIImage(data: data!)
+                }
+            }
             return KotlinUnit()
         }
     }
